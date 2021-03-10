@@ -32,9 +32,12 @@ class OptionsMenu extends MusicBeatState
 
 		if (FlxG.save.data.dfjk == null)
 			FlxG.save.data.dfjk = false;
+		
+		if (FlxG.save.data.accuracyToggle == null)
+			FlxG.save.data.accuracyToggle = true;
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.dfjk ? 'DFJK' : 'WASD') + "\n" + (FlxG.save.data.newInput ? "New input" : "Old Input") + "\n" + (FlxG.save.data.downscroll ? 'Downscroll' : 'Upscroll') + "\nLoad replays");
+		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.dfjk ? 'DFJK' : 'WASD') + "\n" + (FlxG.save.data.newInput ? "New input" : "Old Input") + "\n" + (FlxG.save.data.downscroll ? 'Downscroll' : 'Upscroll') + "\nTurn accuracy display " + (FlxG.save.data.accuracyToggle ? "off" : "on") + "\nLoad replays");
 		
 		trace(controlsStrings);
 
@@ -120,6 +123,12 @@ class OptionsMenu extends MusicBeatState
 						ctrl.targetY = curSelected - 2;
 						grpControls.add(ctrl);
 					case 3:
+						FlxG.save.data.accuracyToggle = !FlxG.save.data.accuracyToggle;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, "Turn accuracy display " + (FlxG.save.data.accuracyToggle ? 'off' : 'on'), true, false);
+						ctrl.isMenuItem = true;
+						ctrl.targetY = curSelected - 3;
+						grpControls.add(ctrl);
+					case 4:
 						trace('switch');
 						FlxG.switchState(new LoadReplayState());
 				}
